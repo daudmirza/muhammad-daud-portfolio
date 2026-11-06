@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed — Daud | Tracking Ops</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0c2340;
+    --bg-blueprint:#123256;
+    --bg-blueprint-2:#153a63;
+    --line-blue:rgba(140,190,235,0.22);
+    --line-blue-strong:rgba(140,190,235,0.5);
+    --accent-amber:#ffb454;
+    --paper:#ece6d6;
+    --ink:#1a2634;
+    --ink-muted:#54636f;
+    --text-light:#e9f2fb;
+    --text-muted:#9db4cc;
+    --mono:'JetBrains Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-deep);
+    color:var(--text-light);
+    font-family:var(--sans);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+
+  /* corner registration marks */
+  .reg-marks{position:relative;}
+  .reg-marks::before,
+  .reg-marks::after,
+  .reg-marks .rm-tr,
+  .reg-marks .rm-br{content:""; position:absolute; width:18px; height:18px;}
+  .reg-marks::before{top:14px; left:14px; border-top:2px solid var(--line-blue-strong); border-left:2px solid var(--line-blue-strong);}
+  .reg-marks::after{bottom:14px; left:14px; border-bottom:2px solid var(--line-blue-strong); border-left:2px solid var(--line-blue-strong);}
+  .reg-marks .rm-tr{top:14px; right:14px; border-top:2px solid var(--line-blue-strong); border-right:2px solid var(--line-blue-strong);}
+  .reg-marks .rm-br{bottom:14px; right:14px; border-bottom:2px solid var(--line-blue-strong); border-right:2px solid var(--line-blue-strong);}
+
+  .eyebrow{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--accent-amber); display:inline-flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:""; width:22px; height:1px; background:var(--accent-amber); display:inline-block;}
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,35,64,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-blue);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+  }
+  .logo{font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:0.02em; color:var(--text-light);}
+  .logo span{color:var(--accent-amber);}
+  .nav-cta{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.03em;
+    background:var(--accent-amber); color:#1a1305;
+    padding:9px 16px; border-radius:2px; text-decoration:none; font-weight:700;
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:96px 28px 60px;
+    background:
+      radial-gradient(circle at 18% 15%, rgba(255,180,84,0.07), transparent 45%),
+      var(--bg-deep);
+  }
+  .hero-grid-overlay{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line-blue) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-blue) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom, black 0%, black 60%, transparent 100%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:2; max-width:1180px; margin:0 auto;}
+  .hero h1{
+    font-family:var(--mono); font-weight:800;
+    font-size:clamp(30px, 3.6vw, 46px);
+    line-height:1.14; letter-spacing:-0.01em;
+    margin:18px 0 20px; color:var(--text-light);
+  }
+  .hero h1 em{font-style:normal; color:var(--accent-amber);}
+  .hero p.lead{font-size:16.5px; color:var(--text-muted); max-width:52ch; margin-bottom:30px;}
+  .btn-primary{
+    font-family:var(--mono); font-size:13px; font-weight:700; letter-spacing:0.02em;
+    background:var(--accent-amber); color:#1a1305;
+    padding:14px 22px; border-radius:2px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .18s ease;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-secondary{
+    font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:0.02em;
+    border:1px solid var(--line-blue-strong); color:var(--text-light);
+    padding:13px 22px; border-radius:2px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .btn-secondary:hover{border-color:var(--accent-amber); background:rgba(255,180,84,0.06);}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+
+  /* SECTION SHELL */
+  section{padding:88px 28px;}
+  .section-inner{max-width:1180px; margin:0 auto;}
+  .sheet-head{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    flex-wrap:wrap; gap:16px; margin-bottom:48px;
+    padding-bottom:18px; border-bottom:1px solid var(--line-blue);
+  }
+  .sheet-head h2{
+    font-family:var(--mono); font-size:clamp(24px,2.6vw,32px);
+    font-weight:800; margin-top:10px; color:var(--text-light);
+  }
+  .sheet-no{font-family:var(--mono); font-size:11px; color:var(--text-muted); text-align:right;}
+
+  /* PROCESS (what happens next) */
+  .process-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:26px;}
+  .process-card{
+    padding:26px 20px 22px;
+    border:1px solid var(--line-blue);
+    border-top:2px solid var(--accent-amber);
+    background:var(--bg-blueprint);
+  }
+  .process-num{
+    font-family:var(--mono); font-size:34px; font-weight:800;
+    color:var(--line-blue-strong); line-height:1; margin-bottom:14px;
+  }
+  .process-card h3{font-size:16px; margin-bottom:8px; color:var(--text-light);}
+  .process-card p{font-size:13px; color:var(--text-muted); line-height:1.55;}
+
+  /* PREP PANEL */
+  .prep-panel{
+    background:var(--bg-blueprint);
+    border:1px solid var(--line-blue-strong);
+    padding:40px;
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:40px; align-items:start;
+  }
+  .prep-panel h2{
+    font-family:var(--mono); font-weight:800;
+    font-size:clamp(22px,2.8vw,30px); line-height:1.22; margin:14px 0 16px;
+  }
+  .prep-panel p{color:var(--text-muted); font-size:14.5px; max-width:42ch;}
+  .prep-list{list-style:none;}
+  .prep-list li{
+    font-family:var(--mono); font-size:12.5px; color:var(--text-light);
+    padding:12px 0; border-bottom:1px dashed var(--line-blue);
+    display:flex; gap:10px; align-items:baseline;
+  }
+  .prep-list li:last-child{border-bottom:none;}
+  .prep-list li::before{content:"›"; color:var(--accent-amber);}
+
+  /* TITLE BLOCK (contact) */
+  .contact-section{background:var(--bg-deep); padding-bottom:0;}
+  .title-block{
+    max-width:1180px; margin:0 auto;
+    border:1px solid var(--line-blue-strong);
+    display:grid; grid-template-columns:1.3fr 1fr;
+  }
+  .tb-left{padding:48px 44px; border-right:1px solid var(--line-blue-strong);}
+  .tb-left .eyebrow{margin-bottom:18px;}
+  .tb-left h2{
+    font-family:var(--mono); font-weight:800;
+    font-size:clamp(24px,3vw,34px); line-height:1.2; margin-bottom:18px;
+  }
+  .tb-left p{color:var(--text-muted); max-width:46ch; margin-bottom:26px; font-size:15px;}
+  .tb-field{
+    padding:18px 30px; border-bottom:1px solid var(--line-blue);
+    display:grid; grid-template-columns:110px 1fr; gap:12px; align-items:baseline;
+  }
+  .tb-field:last-child{border-bottom:none;}
+  .tb-field .k{font-family:var(--mono); font-size:10.5px; letter-spacing:0.1em; color:var(--text-muted); text-transform:uppercase;}
+  .tb-field .v{font-family:var(--mono); font-size:13.5px; color:var(--text-light); font-weight:600;}
+  .tb-field .v a{text-decoration:none; border-bottom:1px dashed var(--line-blue-strong);}
+  .tb-field .v a:hover{color:var(--accent-amber); border-color:var(--accent-amber);}
+
+  footer{
+    text-align:center; padding:26px; font-family:var(--mono); font-size:11px;
+    color:var(--text-muted); border-top:1px solid var(--line-blue); margin-top:56px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px){
+    .process-grid{grid-template-columns:1fr;}
+    .prep-panel{grid-template-columns:1fr; padding:32px 26px;}
+    .title-block{grid-template-columns:1fr;}
+    .tb-left{border-right:none; border-bottom:1px solid var(--line-blue-strong);}
+  }
+  @media (max-width: 560px){
+    .nav-inner{padding:14px 16px;}
+    .logo{font-size:13px;}
+    .hero{padding:72px 18px 44px;}
+    section{padding:64px 18px;}
+    .tb-left{padding:36px 24px;}
+    .tb-field{grid-template-columns:90px 1fr; padding:16px 22px;}
+    .hero-ctas .btn-primary, .hero-ctas .btn-secondary{width:100%; justify-content:center;}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo">DAUD<span>//</span>TRACKING&nbsp;OPS</div>
+    <a class="nav-cta" href="/">Back to site →</a>
+  </div>
+</header>
+
+<!-- CONFIRMATION -->
+<section class="hero">
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">Sheet 09 — Confirmation</span>
+    <h1>You're booked. Your pipeline audit is <em>locked in.</em></h1>
+    <p class="lead">A 30-minute review of your current tracking setup is on the calendar. The invite is in your inbox. Use the steps below to make the call count.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="mailto:ggdaud97@gmail.com">Email me a question →</a>
+      <a class="btn-secondary" href="/">Back to home</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS NEXT -->
+<section class="reveal">
+  <div class="section-inner">
+    <div class="sheet-head">
+      <div>
+        <span class="eyebrow">Sheet 09A</span>
+        <h2>What happens next</h2>
+      </div>
+      <div class="sheet-no">3 steps</div>
+    </div>
+    <div class="process-grid">
+      <div class="process-card">
+        <div class="process-num">01</div>
+        <h3>Check your inbox</h3>
+        <p>Your calendar invite and meeting link arrive by email. Add it to your calendar so the time is blocked.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-num">02</div>
+        <h3>Gather your access</h3>
+        <p>If you have GTM, GA4, or Meta Events Manager access, have it open on the call. Screen-share beats a written brief.</p>
+      </div>
+      <div class="process-card">
+        <div class="process-num">03</div>
+        <h3>Leave with a punch-list</h3>
+        <p>You'll walk away with what's firing, what's missing, and whether server-side tracking is worth it for your stack.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREP -->
+<section class="reveal" style="padding-top:0;">
+  <div class="section-inner">
+    <div class="prep-panel reg-marks">
+      <span class="rm-tr"></span><span class="rm-br"></span>
+      <div>
+        <span class="eyebrow">Before the call</span>
+        <h2>Five minutes of prep saves half the call.</h2>
+        <p>Nothing here is required. The more of it you have ready, the more we can fix in one session.</p>
+      </div>
+      <ul class="prep-list">
+        <li>Note the site and ad accounts you want reviewed</li>
+        <li>Have GTM / GA4 access open if you have it</li>
+        <li>List any tracking issues you've already noticed</li>
+        <li>Tell me your current CRM or booking tool, if any</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section reveal">
+  <div class="section-inner">
+    <div class="sheet-head" style="border-bottom:none; margin-bottom:24px;">
+      <div>
+        <span class="eyebrow">Sheet 09B</span>
+        <h2>Need to reach me?</h2>
+      </div>
+      <div class="sheet-no">Title block ↓</div>
+    </div>
+
+    <div class="title-block reg-marks">
+      <span class="rm-tr"></span><span class="rm-br"></span>
+      <div class="tb-left">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Reschedule or send over your setup in advance.</h2>
+        <p>Replies usually go out within one business day.</p>
+        <a class="btn-primary" href="mailto:ggdaud97@gmail.com">Email ggdaud97@gmail.com →</a>
+      </div>
+      <div class="tb-right">
+        <div class="tb-field"><span class="k">Name</span><span class="v">Daud</span></div>
+        <div class="tb-field"><span class="k">Role</span><span class="v">Marketing Technologist</span></div>
+        <div class="tb-field"><span class="k">Based</span><span class="v">Remote — DACH &amp; global</span></div>
+        <div class="tb-field"><span class="k">Upwork</span><span class="v"><a href="https://www.upwork.com/freelancers/~01ab32ab9751d7d2c4" target="_blank" rel="noopener">View profile →</a></span></div>
+        <div class="tb-field"><span class="k">Fiverr</span><span class="v"><a href="https://www.fiverr.com/users/daudmirza792/manage_gigs" target="_blank" rel="noopener">View gigs →</a></span></div>
+        <div class="tb-field"><span class="k">Response</span><span class="v">&lt; 24 hours</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>SHEET 09 · BOOKING CONFIRMED · TRACKING &amp; ATTRIBUTION INFRASTRUCTURE · REV. 2026</footer>
+</section>
+
+<script>
+  // Reveal-on-scroll, same behaviour as the main site. Content is visible if JS is off.
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(e=>e.classList.add('in')); return; }
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    els.forEach(el=>io.observe(el));
+  })();
+</script>
+<style>
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+</style>
+
+</body>
+</html>
